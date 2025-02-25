@@ -1,6 +1,7 @@
 # University-PHP-Tasks
 
 ## Структура файлов и папок
+```
 project/
 ├── www/
 │   ├── index.php
@@ -40,3 +41,4 @@ theme3/
     ├── cat.php
     ├── human.php
     └── lesson.php
+```
