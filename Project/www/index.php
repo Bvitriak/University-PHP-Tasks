@@ -1,20 +1,33 @@
 <?php
 
     spl_autoload_register(function(string $className){
-        require_once dirname(__DIR__).'\\'.$className. '.php';
+        require_once dirname(__DIR__).'\\'.$className.'.php';
     });
 
-    $controller = new srq\Controllers\MainController;
-    if (isset($_GET['name']) && !empty($_GET['name'])) {
-        $controller ->sayHello($_GET['name']);
+    
+    $findRoute = false;
+    
+    $route = $_GET['route'] ?? '';
+    // var_dump($route);
+    $patterns = require 'route.php';
+    foreach ($patterns as $pattern=>$controllerAndAction){
+        preg_match($pattern, $route, $matches);
+        if (!empty($matches)){
+            $findRoute = true;
+            unset($matches[0]);
+            $nameController = $controllerAndAction[0];
+            $actionName = $controllerAndAction[1];
+            $controller = new $nameController;
+            $controller->$actionName(...$matches);
+            break;
+        }
     }
-    else $controller -> main();
+    
+    if (!$findRoute) echo "Page not found (404)";
 
-    $controller -> sayHello();
 
     $user = new src\Models\Users\User('Ivan');
     $article = new src\Models\Articles\Article('title', 'text', $user);
 
-    var_dump($user);
-    var_dump($article);
-?>
+    // var_dump($user);
+    // var_dump($article);
