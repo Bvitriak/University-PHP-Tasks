@@ -34,11 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case '-':
         case '*':
         case '/':
-            // Разрешаем минус как первый символ (для отрицательных чисел)
             if (empty($display) && $action == '-') {
                 $_SESSION['display'] = '-';
             } 
-            // Заменяем предыдущий оператор, если он есть
             else if (!empty($display)) {
                 $lastChar = substr($display, -1);
                 if (in_array($lastChar, ['+', '-', '*', '/'])) {
@@ -59,18 +57,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         case 'calculate':
             try {
-                // Удаляем все пробелы
                 $expression = str_replace(' ', '', $display);
                 
-                // Проверяем выражение на безопасность перед использованием eval()
                 if (!preg_match('/^[-+]?[\d\.]+([\+\-\*\/][-+]?[\d\.]+)*$/', $expression)) {
                     throw new Exception('Недопустимое выражение');
                 }
                 
-                // Вычисляем результат через eval()
                 $result = eval("return $expression;");
                 
-                // Округляем, если результат дробный
                 $_SESSION['display'] = is_float($result) && $result == (int)$result 
                     ? (int)$result 
                     : $result;
