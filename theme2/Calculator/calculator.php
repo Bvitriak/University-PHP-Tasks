@@ -34,27 +34,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case '-':
         case '*':
         case '/':
-            $lastChar = substr($display, -1);
-            if (in_array($lastChar, ['+', '-', '*', '/'])) {
-                $_SESSION['display'] = substr($display, 0, -1) . ' ' . $action . ' ';
-            } else {
-                $_SESSION['display'] .= ' ' . $action . ' ';
+            // Разрешаем минус как первый символ (для отрицательных чисел)
+            if (empty($display) && $action == '-') {
+                $_SESSION['display'] = '-';
+            } 
+            // Заменяем предыдущий оператор, если он есть
+            else if (!empty($display)) {
+                $lastChar = substr($display, -1);
+                if (in_array($lastChar, ['+', '-', '*', '/'])) {
+                    $_SESSION['display'] = substr($display, 0, -1) . $action;
+                } else {
+                    $_SESSION['display'] .= $action;
+                }
             }
             break;
 
         case '.':
-            $lastNumber = explode(' ', $display);
-            $lastNumber = end($lastNumber);
-            if (!str_contains($lastNumber, '.')) {
+            $parts = preg_split('/[\+\-\*\/]/', $display);
+            $lastPart = end($parts);
+            if (!str_contains($lastPart, '.')) {
                 $_SESSION['display'] .= '.';
             }
             break;
 
         case 'calculate':
             try {
-                $result = eval('return ' . $display . ';');
-                $_SESSION['display'] = $result;
-            } catch (Exception $e) {
+                // Удаляем все пробелы
+                $expression = str_replace(' ', '', $display);
+                
+                // Проверяем выражение на безопасность перед использованием eval()
+                if (!preg_match('/^[-+]?[\d\.]+([\+\-\*\/][-+]?[\d\.]+)*$/', $expression)) {
+                    throw new Exception('Недопустимое выражение');
+                }
+                
+                // Вычисляем результат через eval()
+                $result = eval("return $expression;");
+                
+                // Округляем, если результат дробный
+                $_SESSION['display'] = is_float($result) && $result == (int)$result 
+                    ? (int)$result 
+                    : $result;
+            } catch (Throwable $e) {
                 $_SESSION['display'] = 'Ошибка';
             }
             break;
