@@ -6,20 +6,20 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => {
             const action = button.dataset.action;
 
-            fetch('calculator.php', {
+            fetch('', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `action=${encodeURIComponent(action)}`, 
+                body: `action=${encodeURIComponent(action)}`
             })
-            .then(response => response.text())
-            .then(result => {
-                display.value = result;
-            })
-            .catch(() => {
-                display.value = 'Ошибка'; 
-            });
+                .then(response => response.text())
+                .then(result => {
+                    display.value = result;
+                })
+                .catch(() => {
+                    display.value = 'Ошибка';
+                });
         });
     });
 });

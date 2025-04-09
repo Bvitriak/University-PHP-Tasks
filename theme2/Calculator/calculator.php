@@ -5,7 +5,7 @@ if (!isset($_SESSION['display'])) {
     $_SESSION['display'] = '';
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $action = $_POST['action'];
     $display = $_SESSION['display'];
 
@@ -16,58 +16,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         case 'toggleSign':
             if (!empty($display)) {
-                if ($display[0] === '-') {
-                    $_SESSION['display'] = substr($display, 1);
-                } else {
-                    $_SESSION['display'] = '-' . $display;
-                }
+                $_SESSION['display'] = $display[0] === '-' ? substr($display, 1) : '-' . $display;
             }
             break;
 
         case 'percentage':
-            if (!empty($display)) {
+            if (is_numeric($display)) {
                 $_SESSION['display'] = (float)$display / 100;
-            }
-            break;
-
-        case '+':
-        case '-':
-        case '*':
-        case '/':
-            if (empty($display) && $action == '-') {
-                $_SESSION['display'] = '-';
-            } 
-            else if (!empty($display)) {
-                $lastChar = substr($display, -1);
-                if (in_array($lastChar, ['+', '-', '*', '/'])) {
-                    $_SESSION['display'] = substr($display, 0, -1) . $action;
-                } else {
-                    $_SESSION['display'] .= $action;
-                }
-            }
-            break;
-
-        case '.':
-            $parts = preg_split('/[\+\-\*\/]/', $display);
-            $lastPart = end($parts);
-            if (!str_contains($lastPart, '.')) {
-                $_SESSION['display'] .= '.';
             }
             break;
 
         case 'calculate':
             try {
-                $expression = str_replace(' ', '', $display);
-                
-                if (!preg_match('/^[-+]?[\d\.]+([\+\-\*\/][-+]?[\d\.]+)*$/', $expression)) {
-                    throw new Exception('Недопустимое выражение');
+                $expression = preg_replace('/[^\d\.\+\-\*\/\(\)]/', '', $display);
+                if (!empty($expression)) {
+                    @eval("\$result = ($expression);");
+                    $_SESSION['display'] = is_float($result) && $result == (int)$result
+                        ? (int)$result
+                        : $result;
                 }
-                
-                $result = eval("return $expression;");
-                
-                $_SESSION['display'] = is_float($result) && $result == (int)$result 
-                    ? (int)$result 
-                    : $result;
             } catch (Throwable $e) {
                 $_SESSION['display'] = 'Ошибка';
             }
@@ -76,6 +43,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         default:
             if (is_numeric($action)) {
                 $_SESSION['display'] .= $action;
+            }
+            elseif (in_array($action, ['+', '-', '*', '/'])) {
+                $lastChar = substr($display, -1);
+                if (in_array($lastChar, ['+', '-', '*', '/'])) {
+                    $_SESSION['display'] = substr($display, 0, -1) . $action;
+                } else {
+                    $_SESSION['display'] .= $action;
+                }
+            }
+            elseif ($action === '.') {
+                $parts = preg_split('/[\+\-\*\/]/', $display);
+                $lastPart = end($parts);
+                if (!str_contains($lastPart, '.')) {
+                    $_SESSION['display'] .= '.';
+                }
             }
             break;
     }
