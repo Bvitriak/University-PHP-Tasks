@@ -8,3 +8,4 @@ if (!isset($_SESSION['test_text'])) {
     echo "Содержимое сессии: " . $_SESSION['test_text'];
 }
 ?>
+
