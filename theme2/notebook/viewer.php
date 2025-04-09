@@ -57,3 +57,4 @@ function displayContacts($sort = 'default', $page = 1) {
     return $html;
 }
 ?>
+
