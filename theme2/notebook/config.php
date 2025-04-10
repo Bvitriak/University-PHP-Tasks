@@ -1,7 +1,6 @@
 <?php
 define('ACCESS_ALLOWED', true);
 
-// Настройки для MAMP
 $host = 'localhost';
 $db   = 'contacts_db';
 $user = 'root';
