@@ -22,7 +22,7 @@ $contacts = $pdo->query("SELECT id, last_name, first_name FROM contacts ORDER BY
 
 echo '<main><div class="div-edit">';
 foreach ($contacts as $contact) {
-    echo "<div><a href='index.php?action=delete&id={$contact['id']}'>
+    echo "<div><a href='index.html?action=delete&id={$contact['id']}'>
         {$contact['last_name']} {$contact['first_name']}
     </a></div>";
 }

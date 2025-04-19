@@ -3,7 +3,7 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['country'])) {
     $_SESSION['user_country'] = htmlspecialchars($_POST['country']);
-    header('Location: index.php');
+    header('Location: index.html');
     exit();
 }
 ?>

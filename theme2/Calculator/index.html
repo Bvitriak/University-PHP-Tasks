@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('display')) {
+                document.getElementById('display').value = params.get('display');
+                document.getElementById('expression').value = params.get('expression') || '';
+                document.getElementById('reset').value = params.get('reset') || 'false';
+            }
+        });
+    </script>
+</head>
+<body>
+<div class="calculator">
+    <form action="calculator.php" method="post">
+        <input type="text" name="display" id="display" readonly value="0">
+        <input type="hidden" name="expression" id="expression" value="">
+        <input type="hidden" name="reset" id="reset" value="false">
+
+        <div class="buttons">
+            <button type="submit" name="action" value="clear" class="clear">C</button>
+            <button type="submit" name="action" value="%" class="function">%</button>
+            <button type="submit" name="action" value="negate" class="function">-()</button>
+            <button type="submit" name="action" value="/" class="operator">/</button>
+
+            <button type="submit" name="action" value="7">7</button>
+            <button type="submit" name="action" value="8">8</button>
+            <button type="submit" name="action" value="9">9</button>
+            <button type="submit" name="action" value="*" class="operator">*</button>
+
+            <button type="submit" name="action" value="4">4</button>
+            <button type="submit" name="action" value="5">5</button>
+            <button type="submit" name="action" value="6">6</button>
+            <button type="submit" name="action" value="-" class="operator">-</button>
+
+            <button type="submit" name="action" value="1">1</button>
+            <button type="submit" name="action" value="2">2</button>
+            <button type="submit" name="action" value="3">3</button>
+            <button type="submit" name="action" value="+" class="operator">+</button>
+
+            <button type="submit" name="action" value="0" class="zero">0</button>
+            <button type="submit" name="action" value=".">.</button>
+            <button type="submit" name="action" value="=" class="equals">=</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

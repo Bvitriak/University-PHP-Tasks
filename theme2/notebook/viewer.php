@@ -48,7 +48,7 @@ function displayContacts($sort = 'default', $page = 1) {
         $html .= '<div class="pagination">';
         for ($i = 1; $i <= $pages; $i++) {
             $current = ($i == $page) ? 'style="font-weight: bold;"' : '';
-            $html .= "<a href='index.php?action=view&sort=$sort&page=$i' $current>$i</a> ";
+            $html .= "<a href='index.html?action=view&sort=$sort&page=$i' $current>$i</a> ";
         }
         $html .= '</div>';
     }

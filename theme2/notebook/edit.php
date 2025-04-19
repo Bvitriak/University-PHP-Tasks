@@ -44,7 +44,7 @@ echo '<main>';
 echo '<div class="div-edit">';
 foreach ($contacts as $contact) {
     $active = ($contact['id'] == $selectedId) ? 'currentRow' : '';
-    echo "<div class='$active'><a href='index.php?action=edit&id={$contact['id']}'>
+    echo "<div class='$active'><a href='index.html?action=edit&id={$contact['id']}'>
         {$contact['last_name']} {$contact['first_name']}
     </a></div>";
 }
