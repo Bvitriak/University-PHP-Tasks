@@ -1,0 +1,411 @@
+:root {
+    --color-primary: #4361ee;
+    --color-secondary: #3a0ca3;
+    --color-accent: #f72585;
+    --color-light: #f8f9fa;
+    --color-dark: #212529;
+    --color-border: rgba(0, 0, 0, 0.1);
+    --color-menu-bg: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+    --color-active-text: #212529;
+    --color-active-border: #212529;
+}
+
+html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 60px;
+}
+
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+main {
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+header {
+    width: 100%;
+    height: 70px;
+    background: var(--color-menu-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 0 20px;
+}
+
+a {
+    font-family: 'Lemonada', cursive;
+    text-decoration: none;
+}
+
+a:hover {
+    opacity: 1;
+}
+
+.select {
+    color: red !important;
+    border: 2px solid red !important;
+}
+
+header a {
+    padding: 12px 24px;
+    border-radius: 50px;
+    color: white;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    text-decoration: none;
+    font-size: 0.95rem;
+    backdrop-filter: blur(5px);
+}
+
+header a:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+header a:active {
+    transform: translateY(0);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+header a.select {
+    background: rgba(255, 255, 255, 0.1);
+    color: white !important;
+    border: 2px solid var(--color-active-border) !important;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.submenu {
+    background: rgba(67, 97, 238, 0.1);
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.submenu a {
+    padding: 8px 20px;
+    border-radius: 20px;
+    background: white;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    transition: all 0.3s;
+    font-size: 0.85rem;
+}
+
+.submenu a:hover {
+    background: var(--color-primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.submenu a.select {
+    background: var(--color-primary);
+    color: white !important; /* Черный текст */
+    border: 1px solid var(--color-active-border) !important;
+    font-weight: bold;
+}
+
+.success {
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border: 1px solid #badbcc;
+    padding: 10px;
+    margin: 20px auto;
+    width: 10rem;
+    border-radius: 5px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+.error {
+    color: #842029;
+    background-color: #f8d7da;
+    border: 1px solid #f5c2c7;
+    padding: 10px;
+    margin: 20px auto;
+    width: 10rem;
+    border-radius: 5px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+.add {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.add label {
+    width: 150px;
+    padding-left: 0;
+    text-align: right;
+    margin-right: 15px;
+    font-weight: 500;
+    color: var(--color-dark);
+}
+
+.column {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.div-edit {
+    width: 90%;
+    max-width: 800px;
+    margin: 30px auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 25px;
+}
+
+.div-edit > div {
+    padding: 15px;
+    margin: 8px 0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.div-edit > div:hover {
+    background-color: #f8f9ff;
+    transform: translateX(5px);
+}
+
+.div-edit a {
+    display: block;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.05rem;
+    transition: color 0.2s;
+}
+
+.div-edit a:hover {
+    color: var(--color-secondary);
+}
+
+.currentRow {
+    background-color: rgba(67, 97, 238, 0.1) !important;
+    border-left: 4px solid var(--color-primary) !important;
+    font-weight: 600;
+}
+
+/* Специальные стили для страницы удаления */
+.div-edit > div[onclick] {
+    cursor: pointer;
+    position: relative;
+}
+
+.div-edit > div[onclick]:hover {
+    background-color: #fff0f0;
+}
+
+.div-edit > div[onclick]::before {
+    content: "✕";
+    color: #e63946;
+    margin-right: 12px;
+    font-weight: bold;
+}
+
+/* Анимация для сообщений */
+.success, .error {
+    animation: fadeIn 0.5s ease-out;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.success {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+}
+
+.delete-message {
+    margin: 20px auto;
+    width: 90%;
+    max-width: 800px;
+}
+
+.delete-message .success {
+    margin: 0;
+    width: 100%;
+}
+
+/* Анимация */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.div-edit .currentRow {
+    padding: 5px;
+    border-radius: 4px;
+}
+
+input, select, textarea {
+    flex-grow: 1;
+    width: auto;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    outline: none;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+label {
+    display: inline-block;
+    box-sizing: border-box;
+    padding-left: 135px;
+    width: 120px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+th {
+    background: var(--color-primary);
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+td {
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background: white;
+    transition: background 0.2s;
+}
+
+tr:hover td {
+    background: #f8f9ff;
+}
+
+.form-btn {
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 12px;
+    background: var(--color-primary);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.form-btn:hover {
+    background: var(--color-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.pagination a {
+    padding: 8px 16px;
+    border-radius: 6px;
+    background: white;
+    color: var(--color-primary);
+    border: 1px solid rgba(67, 97, 238, 0.3);
+    transition: all 0.3s;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.pagination a:hover {
+    background: rgba(67, 97, 238, 0.1);
+    border-color: var(--color-primary);
+}
+
+.pagination a[style*="font-weight: bold"] {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+footer {
+    width: 100%;
+    height: 50px;
+    background-color: rgb(92, 103, 168);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+}

@@ -9,7 +9,7 @@ $action = in_array($action, $allowedActions) ? $action : 'view';
 echo '<!DOCTYPE html><html><head>
     <meta charset="UTF-8">
     <title>Контакты</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="notebook.css">
 </head><body>';
 
 echo generateMenu();
