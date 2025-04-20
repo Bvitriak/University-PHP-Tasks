@@ -11,7 +11,7 @@ function generateMenu() {
     $menuHtml = '<header>';
     foreach ($menuItems as $action => $title) {
         $active = ($currentAction == $action) ? 'select' : '';
-        $menuHtml .= "<a href='index.html?action=$action' class='$active'>$title</a>";
+        $menuHtml .= "<a href='index.php?action=$action' class='$active'>$title</a>";
     }
     $menuHtml .= '</header>';
 
@@ -26,7 +26,7 @@ function generateMenu() {
         $menuHtml .= '<div class="submenu">';
         foreach ($submenuItems as $key => $value) {
             $active = ($sort == $key) ? 'select' : '';
-            $menuHtml .= "<a href='index.html?action=view&sort=$key' class='$active'>$value</a>";
+            $menuHtml .= "<a href='index.php?action=view&sort=$key' class='$active'>$value</a>";
         }
         $menuHtml .= '</div>';
     }
