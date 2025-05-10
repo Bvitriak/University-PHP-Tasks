@@ -1,71 +1,124 @@
 <?php
-
 namespace src\Controllers;
 
-use Exceptions\NotFoundException;
 use src\View\View;
 use src\Models\Articles\Article;
+use src\Models\Comments\Comment;
+use src\Exceptions\NotFoundException;
+use Exception;
 
-class ArticleController {
+class ArticleController
+{
     private $view;
-    
+
     public function __construct()
     {
-        $this->view = new View(dirname(dirname(__DIR__)).'/templates');
+        $this->view = new View(dirname(__DIR__, 2).'/templates');
     }
 
-    public function index(){
+    public function index()
+    {
         $articles = Article::findAll();
-        $this->view->renderHtml('main/main', ['articles'=>$articles]);
+        $this->view->renderHtml('main/main', ['articles' => $articles]);
     }
 
-    public function show(int $id){
-        
-        $article = Article::getById($id);
-        if ($article == null){
-            throw new NotFoundException();
+    public function create()
+    {
+        $this->view->renderHtml('article/create');
+    }
+
+    public function store()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("HTTP/1.1 405 Method Not Allowed");
+            exit;
         }
-        $this->view->renderHtml('article/show', ['article'=>$article]);
-    }
 
-    public function create(){
-        return $this->view->renderHtml('article/create');
-    }
+        try {
+            $article = new Article();
+            $article->setName($_POST['name']);
+            $article->setText($_POST['text']);
+            $article->setAuthorId(1);
+            $article->save();
 
-    public function store(){
-        $article = new Article;
-        $article->name = $_POST['name'];
-        $article->text = $_POST['text'];
-        $article->authorId = 1;
-        $article->save();
-        return header('Location:http://localhost/student-241/3210_1/Project/www/');
-    }
-
-    public function edit(int $id){
-        $article = Article::getById($id);
-        if ($article == null){
-            throw new NotFoundException();
+            header("Location: " . BASE_URL . "/article/" . $article->getId());
+            exit;
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            header("Location: " . BASE_URL . "/article/create?error=1");
+            exit;
         }
-        return $this->view->renderHtml('/article/edit', ['article'=>$article]);
     }
 
-    public function update(int $id){
-        $article = Article::getById($id);
-        if ($article == null){
-            throw new NotFoundException();
+    public function show(int $id)
+    {
+        try {
+            $article = Article::getById($id);
+            if (!$article) {
+                throw new NotFoundException("Article not found");
+            }
+
+            $comments = Comment::findByArticleId($id);
+
+            $this->view->renderHtml('article/show', [
+                'article' => $article,
+                'comments' => $comments,
+                'title' => $article->getName()
+            ]);
+        } catch (NotFoundException $e) {
+            $this->view->renderHtml('errors/404', ['error' => $e->getMessage()], 404);
         }
-        $article->setName($_POST['name']);
-        $article->setText($_POST['text']);
-        $article->save();
-        return $this->view->renderHtml('article/show', ['article'=>$article]);
     }
 
-    public function delete(int $id){
-        $article = Article::getById($id);
-        if ($article == null){
-            throw new NotFoundException();
+    public function edit(int $id)
+    {
+        try {
+            $article = Article::getById($id);
+
+            if ($article === null) {
+                throw new NotFoundException("Article not found");
+            }
+
+            $this->view->renderHtml('article/edit', ['article' => $article]);
+        } catch (NotFoundException $e) {
+            $this->view->renderHtml('errors/404', ['error' => $e->getMessage()], 404);
         }
-        $article->delete();
-        return header('Location:http://localhost/student-241/3210_1/Project/www/');
+    }
+
+    public function update(int $id)
+    {
+        try {
+            $article = Article::getById($id);
+
+            if (!$article) {
+                throw new NotFoundException("Article not found");
+            }
+
+            $article->setName($_POST['name']);
+            $article->setText($_POST['text']);
+            $article->save();
+
+            header("Location: " . BASE_URL . "/article/" . $id);
+            exit;
+        } catch (NotFoundException $e) {
+            $this->view->renderHtml('errors/404', ['error' => $e->getMessage()], 404);
+        }
+    }
+
+    public function delete(int $id)
+    {
+        try {
+            $article = Article::getById($id);
+
+            if ($article === null) {
+                throw new NotFoundException("Article not found");
+            }
+
+            $article->delete();
+            header('Location: /');
+            exit;
+        } catch (NotFoundException $e) {
+            $this->view->renderHtml('errors/404', ['error' => $e->getMessage()], 404);
+        }
     }
 }

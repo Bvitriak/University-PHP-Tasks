@@ -1,0 +1,98 @@
+/* Централизованный контейнер */
+.hello-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+/* Карточка приветствия */
+.hello-card {
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    padding: 3rem;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Заголовок */
+.hello-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.hello-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #4b6cb7;
+    margin: 1.5rem auto;
+}
+
+/* Текст */
+.hello-text {
+    font-size: 1.2rem;
+    color: #5a6a7e;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+/* Стильная прямоугольная кнопка */
+.hello-btn {
+    display: inline-block;
+    background: #4b6cb7;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(75, 108, 183, 0.3);
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #4b6cb7;
+}
+
+.hello-btn:hover {
+    background: #3a56a0;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(75, 108, 183, 0.4);
+}
+
+.hello-btn:active {
+    transform: translateY(0);
+}
+
+.hello-btn i {
+    margin-right: 8px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .hello-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .hello-title {
+        font-size: 2rem;
+    }
+
+    .hello-text {
+        font-size: 1.1rem;
+    }
+
+    .hello-btn {
+        padding: 10px 25px;
+    }
+}

@@ -1,6 +1,16 @@
+# Включаем механизм преобразования URL
 RewriteEngine On
 
-RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteCond %{SCRIPT_FILENAME} !-f
+# Базовый URL для преобразований (корень проекта)
+RewriteBase /php/Project/
 
-RewriteRule ^(.*)$ ./index.php?route=$1 [QSA,L]
+# Условия преобразования:
+# 1. Если запрошенный файл не существует
+# 2. И если запрошенная директория не существует
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Правило преобразования:
+# Перенаправляем все запросы на index.php, сохраняя параметры запроса
+# И делаем это последним правилом
+RewriteRule ^(.*)$ index.php [QSA,L]

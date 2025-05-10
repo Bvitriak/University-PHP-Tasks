@@ -4,23 +4,26 @@ namespace src\Models\Users;
 
 use src\Models\ActiveRecordEntity;
 
-class User extends ActiveRecordEntity{
+class User extends ActiveRecordEntity
+{
     protected $nickname;
     protected $email;
     protected $isConfirmed;
     protected $role;
     protected $passwordHash;
     protected $authToken;
-    protected $createedAt;
+    protected $createdAt;
 
-
-    public function setName(string $name){
-        $this->nickname = $name;
+    public function setNickname(string $nickname): void
+    {
+        $this->nickname = $nickname;
     }
-    public function getNickName(): string
+
+    public function getNickname(): string
     {
         return $this->nickname;
     }
+
     protected static function getTableName(): string
     {
         return 'users';
