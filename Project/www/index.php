@@ -2,15 +2,13 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Правильное определение базового пути
+
 define('BASE_PATH', dirname(__DIR__));
 define('BASE_URL', 'http://' . $_SERVER['HTTP_HOST'] . '/php/Project');
 define('APP_PATH', BASE_PATH . '/src');
 
-// Автозагрузка классов
-require __DIR__ . '/../src/autoload.php';
 
-// Проверка пути к Database.php
+require __DIR__ . '/../src/autoload.php';
 
 use src\Controllers\ArticleController;
 use src\Controllers\MainController;
@@ -23,10 +21,9 @@ if (!class_exists('src\Services\Database')) {
 }
 try {
     $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    $basePath = '/php/Project'; // Измените на ваш базовый путь
+    $basePath = '/php/Project';
     $route = str_replace($basePath, '', $requestUri);
 
-    // Маршрутизация
     switch ($route) {
         case '/':
             (new ArticleController())->index();

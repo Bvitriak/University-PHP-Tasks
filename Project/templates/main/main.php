@@ -1,8 +1,8 @@
 <div class="article-table-container">
     <div class="article-table-header">
-        <h2 class="article-table-title">Современные статьи</h2>
+        <h2 class="article-table-title">Contemporary articles</h2>
         <a href="<?= BASE_URL ?>/article/create" class="new-article-btn">
-            <i class="bi bi-plus-lg"></i> Новая статья
+            <i class="bi bi-plus-lg"></i> New article
         </a>
     </div>
 
@@ -10,9 +10,9 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Название</th>
-            <th>Описание</th>
-            <th>Автор</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Author</th>
         </tr>
         </thead>
         <tbody>

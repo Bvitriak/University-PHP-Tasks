@@ -1,4 +1,3 @@
-<!-- templates/article/show.php -->
 <div class="card mb-4">
     <div class="card-body">
         <h1 class="card-title"><?= htmlspecialchars($article->getName()) ?></h1>
@@ -15,7 +14,6 @@
     </div>
 </div>
 
-<!-- Форма добавления комментария -->
 <div class="card mt-4">
     <div class="card-body">
         <h5 class="card-title">Добавить комментарий</h5>
@@ -28,7 +26,6 @@
     </div>
 </div>
 
-<!-- Список комментариев -->
 <?php if (!empty($comments)): ?>
     <div class="card mt-4">
         <div class="card-body">
